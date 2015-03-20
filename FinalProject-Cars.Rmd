@@ -16,31 +16,45 @@ Fuel efficienty and transmission type are both very important and greatly debate
 First the mtcars data is loaded and some brief exploratory statistics are discovered.
 
 ```{r}
-data(mtcars)
-attach(mtcars)
+data(mtcars); attach(mtcars)
 head(mtcars,2) #Examine how the data is structured in mtcars
-a_mean <- mean(mpg[am=="0"]) #Automatic Transmission mean
-m_mean <- mean(mpg[am=="1"]) #Manual Transmission mean
+mean(mpg[am=="0"]) #Automatic Transmission mean
+mean(mpg[am=="1"]) #Manual Transmission mean
 ```
 
-Quickly examining the data to determine the means we find that the average fuel economy among automatic cars is 17.14 Mpg whereas the average among manual transmissions is 24.39 Mpg. Furthermore, according to a boxplot of the data (*see* **Figure 1**) we could guess that the fuel efficiency of a manual transmission is greater than that of an automatic transmission. The average and median is MPG for manual transmission is distinctly higher than that of automatic transmissions. However, we cannot yet make a conclusion on based on this chart alone. First we will need to determine if a relationship does exist by using regression. 
+Quickly examining the data to determine the means we find that the average fuel economy among automatic cars is 17.14 MPG whereas the average among manual transmissions is 24.39 MPG. Furthermore, according to a boxplot of the data (*see* **Figure 1**) we could guess that the fuel efficiency of a manual transmission is greater than that of an automatic transmission. The average and median is MPG for manual transmission is distinctly higher than that of automatic transmissions. However, we cannot yet make a conclusion on based on this chart alone. First we will need to determine if a relationship does exist by using regression. 
 
 #Regression Models
 
-First we use a linear model using mpg as the outcome and transmission type (variable am, "0" denotes automatic whereas "1" denotes manual) as the predictor.
+First we try a linear model using mpg as the outcome and transmission type (variable am, "0" denotes automatic whereas "1" denotes manual) as the predictor.
 
 ```{r}
-Model_1 <- lm(mpg ~ am)
-summary(Model_1)
+model_am <- lm(mpg ~ am)
+summary(model_am)
 ```
 
+Using this model we can determine that this model, while significant, can only explain about 36% (Multiple R-squared value of 0.3598) of the variance in MPG. Therefore we shoudl try another model to examine the other variables in the mtcars dataset.
+
+Accoding to the (*see* **Figure 2**)
 
 #Appendix
+
+Data and figures that accompany the report.
 
 ##Figure 1: Boxplot summarizing both automatic and manual transmission types
 
 ```{r}
-boxplot(mpg ~ am, xlab="Transmission Type", ylab="Miles per Gallon (MPG)", xaxt="n", main="Transmission and MPG",
+boxplot(mpg ~ am, xlab="Transmission Type", ylab="Miles per Gallon (MPG)", xaxt="n", 
+        main="Transmission and MPG",
         col=c("green", "yellow"))
 axis(1, at=1:2, labels=c("Automatic", "Manual"))
+```
+
+##Figure 2: 
+
+Pairs chart covering the variances between many different variables in the mtcars dataset. 
+
+```{r}
+pairs(mtcars, panel=function(x,y)
+abline(lm(y~x), col="green")
 ```
