@@ -1,0 +1,30 @@
+---
+title: "RegressionModelsCourseProject"
+author: "Ryan Wissman"
+date: "Friday, March 20, 2015"
+output: pdf_document
+---
+
+#Coursera Regression Models Project - Manual Vs. Automatic Transmission and MPG
+
+##Executive Summary
+
+Fuel efficienty and transmission type are both very important and greatly debated factors when selecting a new car. This report examines the relationship between tranmission type and fuel economy to determine if there is any MPG benefit to purchasing a car of either type transmission. The data used in this report is from the 1974 Motor Trend US magazine.
+
+<results summary>
+
+##Exploring the Data
+
+
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
