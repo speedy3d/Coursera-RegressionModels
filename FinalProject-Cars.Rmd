@@ -32,23 +32,28 @@ First we try a linear model using mpg as the outcome and transmission type (vari
 
 ```{r}
 model_am <- lm(mpg ~ am)
-summary(model_am)
+summary(model_am)$adj.r.squared
 ```
 
-Using this model we can determine that this model can only explain about 36% (Multiple R-squared value of 0.3598) of the variance in MPG. Therefore we should try another model to examine the other variables in the mtcars dataset.
+Using this model we can determine that this model can only explain about 34% (Adjusted R-squared value of 0.3598) of the variance in MPG. Therefore we should try another model to examine the other variables in the mtcars dataset.
 
 ###Model: All Variables 
 
 ```{r}
 model_full <- lm(mpg ~ ., mtcars)
-summary(model_full)
+summary(model_full)$adj.r.squared
 ```
 
-Fitting all the variables can explain about 87% (Multiple-R Squared) of the variance in MPG. Accoding to the matrix scatterplot of all the variables in mtcars (*see* **Figure 2**) the there are a number of other variables that show significant correlation with MPG. Therefore exparimentation is necessary to create a model with the highest multiple R-squared value. Furthermore, looking at our coefficnents, the variables with the lowest P value are horsepower (hp), weight (wt), 1/4 mile time (qsec), and transmission (am).
+Fitting all the variables can explain about 81% (Adjusted R-Squared 0.8066) of the variance in MPG. Accoding to the matrix scatterplot of all the variables in mtcars (*see* **Figure 2**) the there are a number of other variables that show significant correlation with MPG. Therefore we can probably create a better model using only the most significant variables. 
 
 ##Model: Best
 
-Since we noticed that 
+Using R step function to step through the itterations of variables to determine which model would be the best.
+
+```{r}
+model_best <- step(model_full, direction="both", trace=0)
+summary(model_best)
+```
 
 
 
@@ -61,13 +66,13 @@ Data and figures that accompany the report.
 ```{r}
 boxplot(mpg ~ am, xlab="Transmission Type", ylab="Miles per Gallon (MPG)", xaxt="n", 
         main="Transmission and MPG",
-        col=c("green", "yellow"))
+        col=c("green", "red"))
 axis(1, at=1:2, labels=c("Automatic", "Manual"))
 ```
 
 ##Figure 2: 
 
-Matrix scatterplot covering the variances between many different variables in the mtcars dataset. Mainly, 
+Matrix scatterplot covering the variances between many different variables in the mtcars dataset.  
 
 ```{r}
 pairs(mtcars, main="Matrix Scatterplot of all Variables", panel=function(x,y){
