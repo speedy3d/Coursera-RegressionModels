@@ -15,10 +15,11 @@ Fuel efficienty and transmission type are both very important and greatly debate
 
 ##Exploring the Data
 
-
+First the mtcars data will be loaded and 
 
 ```{r}
-summary(cars)
+data(mtcars)
+attach(mtcars)
 ```
 
 You can also embed plots, for example:
@@ -28,3 +29,12 @@ plot(cars)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+#Appendix
+
+##Figure 1: Boxplot summarizing both automatic and manual transmission types
+
+```{r}
+boxplot(mtcars)
+```
