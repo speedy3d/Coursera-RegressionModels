@@ -35,7 +35,7 @@ model_am <- lm(mpg ~ am)
 summary(model_am)$adj.r.squared
 ```
 
-Using this model we can determine that this model can only explain about 34% (Adjusted R-squared value of 0.3598) of the variance in MPG. Therefore we should try another model to examine the other variables in the mtcars dataset.
+Using this model we can determine that this model can only explain about 34% (Adjusted R-squared value of 0.3598) of the variance in MPG. Transmission alone does not look like it accounts for enough of the variation to be significant by itself. Therefore we should try another model to examine the other variables in the mtcars dataset.
 
 ###Model: All Variables 
 
@@ -48,12 +48,17 @@ Fitting all the variables can explain about 81% (Adjusted R-Squared 0.8066) of t
 
 ##Model: Best
 
-Using R step function to step through the itterations of variables to determine which model would be the best.
+Using R step function to step through the iterations of variables to determine which model would be the best. 
 
 ```{r}
 model_best <- step(model_full, direction="both", trace=0)
 summary(model_best)
 ```
+
+This model now accounts for about 83% of the variance which is better than our model that accounts for all the variables. The final model included 
+
+##Residuals
+
 
 
 
@@ -70,7 +75,7 @@ boxplot(mpg ~ am, xlab="Transmission Type", ylab="Miles per Gallon (MPG)", xaxt=
 axis(1, at=1:2, labels=c("Automatic", "Manual"))
 ```
 
-##Figure 2: 
+##Figure 2: Matrix Scatterplot of all Variables
 
 Matrix scatterplot covering the variances between many different variables in the mtcars dataset.  
 
@@ -81,4 +86,9 @@ pairs(mtcars, main="Matrix Scatterplot of all Variables", panel=function(x,y){
 })
 ```
 
+##Figure 3: Residual Plots
 
+```{r}
+par(mfrow=c(2,2))
+plot(model_best)
+```
