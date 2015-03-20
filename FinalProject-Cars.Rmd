@@ -23,7 +23,16 @@ a_mean <- mean(mpg[am=="0"]) #Automatic Transmission mean
 m_mean <- mean(mpg[am=="1"]) #Manual Transmission mean
 ```
 
-Quickly examining the data to determine the means we find that the average fuel economy among automatic cars is 17.14 Mpg whereas the average among manual transmissions is 24.39 Mpg. Furthermore, according to a boxplot of the data (*see* **Figure 1**) we could guess that the fuel efficiency of a manual transmission is greater than that of an automatic transmission. The average and median is MPG for manual transmission is distinctly higher than that of automatic transmissions. However, we cannot yet make a conclusion on based on this chart alone. First we will need to determine if a   
+Quickly examining the data to determine the means we find that the average fuel economy among automatic cars is 17.14 Mpg whereas the average among manual transmissions is 24.39 Mpg. Furthermore, according to a boxplot of the data (*see* **Figure 1**) we could guess that the fuel efficiency of a manual transmission is greater than that of an automatic transmission. The average and median is MPG for manual transmission is distinctly higher than that of automatic transmissions. However, we cannot yet make a conclusion on based on this chart alone. First we will need to determine if a relationship does exist by using regression. 
+
+#Regression Models
+
+First we use a linear mondel using mpg as the outcome and automatic transmission as the predictor.
+
+```{r}
+Model_1 <- lm(mpg ~ am)
+summary(Model_1)
+```
 
 
 #Appendix
