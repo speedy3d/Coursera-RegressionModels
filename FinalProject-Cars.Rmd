@@ -1,5 +1,5 @@
 ---
-title: "Regression Models Course Project - Manual vs. Automatic Transmission and MPG"
+title: "Regression Models - Transmission and MPG"
 author: "Ryan Wissman"
 date: "Friday, March 20, 2015"
 output: pdf_document
@@ -17,9 +17,9 @@ First the mtcars data is loaded and some brief exploratory statistics are discov
 
 ```{r}
 data(mtcars); attach(mtcars)
-head(mtcars,2) #Examine how the data is structured in mtcars
-mean(mpg[am=="0"]) #Automatic Transmission mean
-mean(mpg[am=="1"]) #Manual Transmission mean
+head(mtcars,1) #Examine how the data is structured in mtcars
+mean_a <- mean(mpg[am=="0"]) #Automatic Transmission mean
+mean_m <- mean(mpg[am=="1"]) #Manual Transmission mean
 ```
 
 Quickly examining the data to determine the means we find that the average fuel economy among automatic cars is 17.14 MPG whereas the average among manual transmissions is 24.39 MPG. Furthermore, according to a boxplot of the data (*see* **Figure 1**) we could guess that the fuel efficiency of a manual transmission is greater than that of an automatic transmission. The average and median is MPG for manual transmission is distinctly higher than that of automatic transmissions. However, we cannot yet make a conclusion on based on this chart alone. First we will need to determine if a relationship does exist by using regression. 
@@ -33,15 +33,17 @@ model_am <- lm(mpg ~ am)
 summary(model_am)
 ```
 
-Using this model we can determine that this model, while significant, can only explain about 36% (Multiple R-squared value of 0.3598) of the variance in MPG. Therefore we shoudl try another model to examine the other variables in the mtcars dataset.
+Using this model we can determine that this model can only explain about 36% (Multiple R-squared value of 0.3598) of the variance in MPG. Therefore we should try another model to examine the other variables in the mtcars dataset.
 
-Accoding to the (*see* **Figure 2**)
+Accoding to the matrix scatterplot of all the variables in mtcars (*see* **Figure 2**) the there are a number of other variables that show significant correlation with MPG. Therefore exparimentation is necessary to create a model with the highest multiple R-squared value. 
+
+
 
 #Appendix
 
 Data and figures that accompany the report.
 
-##Figure 1: Boxplot summarizing both automatic and manual transmission types
+##Figure 1: Boxplot summarizing both automatic and manual transmission types relative to MPG
 
 ```{r}
 boxplot(mpg ~ am, xlab="Transmission Type", ylab="Miles per Gallon (MPG)", xaxt="n", 
@@ -55,6 +57,5 @@ axis(1, at=1:2, labels=c("Automatic", "Manual"))
 Pairs chart covering the variances between many different variables in the mtcars dataset. 
 
 ```{r}
-pairs(mtcars, panel=function(x,y)
-abline(lm(y~x), col="green")
+
 ```
