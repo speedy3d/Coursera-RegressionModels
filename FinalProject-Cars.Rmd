@@ -13,13 +13,20 @@ Fuel efficienty and transmission type are both very important and greatly debate
 
 ##Exploring the Data
 
-First the mtcars data is loaded, variables set as factors, and some brief exploratory statistics are discovered.
+First the mtcars data is loaded, variables set as factors (cylinders, v/s (v or straight engine), transmission, number of gears, number of carburetors), and some brief exploratory statistics are discovered.
 
-```{r}
+```{r results='hide'}
 data(mtcars); attach(mtcars)
-head(mtcars,1) #Examine how the data is structured in mtcars
-mean_a <- mean(mpg[am=="0"]) #Automatic Transmission mean
-mean_m <- mean(mpg[am=="1"]) #Manual Transmission mean
+
+#set relevant variables to factors
+mtcars$cyl <- factor(mtcars$cyl)
+mtcars$vs <- factor(mtcars$vs)
+mtcars$am <- factor(mtcars$am)
+mtcars$gear <- factor(mtcars$gear)
+mtcars$carb <- factor(mtcars$carb)
+
+mean(mpg[am=="0"]) #Automatic Transmission mean
+mean(mpg[am=="1"]) #Manual Transmission mean
 ```
 
 Quickly examining the data to determine the means we find that the average fuel economy among automatic cars is 17.14 MPG whereas the average among manual transmissions is 24.39 MPG. Furthermore, according to a boxplot of the data (*see* **Figure 1**) we could guess that the fuel efficiency of a manual transmission is greater than that of an automatic transmission. The average and median is MPG for manual transmission is distinctly higher than that of automatic transmissions. However, we cannot yet make a conclusion on based on this chart alone. First we will need to determine if a relationship does exist by using regression. 
@@ -32,19 +39,19 @@ First we try a linear model using mpg as the outcome and transmission type (vari
 
 ```{r results='hide'}
 model_am <- lm(mpg ~ am)
-summary(model_am)$adj.r.squared
+summary(model_am)$adj.r.squared #hidden results
 ```
 
-Using this model we can determine that this model can only explain about 34% (Adjusted R-squared value of 0.3598) of the variance in MPG. Transmission alone does not look like it accounts for enough of the variation to be significant by itself. Therefore we should try another model to examine the other variables in the mtcars dataset.
+Using this model we can determine that this model can only explain about 34% (Adjusted R-squared value of 0.3384) of the variance in MPG. Transmission alone does not look like it accounts for enough of the variation to be significant by itself. Therefore we should try another model to examine the other variables in the mtcars dataset.
 
 ###Model: All Variables 
 
-```{r}
+```{r results='hide'}
 model_full <- lm(mpg ~ ., mtcars)
-summary(model_full)$adj.r.squared
+summary(model_full)$adj.r.squared #hidden results
 ```
 
-Fitting all the variables can explain about 81% (Adjusted R-Squared 0.8066) of the variance in MPG. Accoding to the matrix scatterplot of all the variables in mtcars (*see* **Figure 2**) the there are a number of other variables that show significant correlation with MPG. Therefore we can probably create a better model using only the most significant variables. 
+Fitting all the variables can explain about 78% (Adjusted R-Squared 0.7790) of the variance in MPG. Accoding to the matrix scatterplot of all the variables in mtcars (*see* **Figure 2**) the there are a number of other variables that show significant correlation with MPG. Therefore we can probably create a better model using only the most significant variables. 
 
 ##Model: Best
 
@@ -55,7 +62,7 @@ model_best <- step(model_full, trace=0)
 summary(model_best)
 ```
 
-This model now accounts for about 83% of the variance which is better than our model that accounts for all the variables. The final model included three variables (weight, 1/4 mile time, and transmission). 
+This model now accounts for about 84% of the variance which is better than our model that accounts for all the variables. The final model included four variables (number of cylinders, horsepower, weight, and transmission).  
 
 ```{r}
 anova(model_am, model_full, model_best)
