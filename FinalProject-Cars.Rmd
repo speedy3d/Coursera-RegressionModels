@@ -39,7 +39,7 @@ First we try a linear model using mpg as the outcome and transmission type (vari
 
 ```{r results='hide'}
 model_am <- lm(mpg ~ am)
-summary(model_am)$adj.r.squared #hidden results
+summary(model_am)$adj.r.squared #result not shown to save space
 ```
 
 Using this model we can determine that this model can only explain about 34% (Adjusted R-squared value of 0.3384) of the variance in MPG. Transmission alone does not look like it accounts for enough of the variation to be significant by itself. Therefore we should try another model to examine the other variables in the mtcars dataset.
@@ -48,21 +48,21 @@ Using this model we can determine that this model can only explain about 34% (Ad
 
 ```{r results='hide'}
 model_full <- lm(mpg ~ ., mtcars)
-summary(model_full)$adj.r.squared #hidden results
+summary(model_full)$adj.r.squared #result not shown to save space
 ```
 
-Fitting all the variables can explain about 78% (Adjusted R-Squared 0.7790) of the variance in MPG. Accoding to the matrix scatterplot of all the variables in mtcars (*see* **Figure 2**) the there are a number of other variables that show significant correlation with MPG. Therefore we can probably create a better model using only the most significant variables. 
+Fitting all the variables can explain about 78% (Adjusted R-squared 0.7790) of the variance in MPG. Accoding to the matrix scatterplot of all the variables in mtcars (*see* **Figure 2**) the there are a number of other variables that show significant correlation with MPG. Therefore we can probably create a better model using only the most significant variables. 
 
-##Model: Best
+###Model: Best Fit
 
 Using R step function to step through the iterations of variables to determine which model would be the best. 
 
-```{r}
+```{r results='hide'}
 model_best <- step(model_full, trace=0)
-summary(model_best)
+summary(model_best) #result not shown to save space
 ```
 
-This model now accounts for about 84% of the variance which is better than our model that accounts for all the variables. The final model included four variables (number of cylinders, horsepower, weight, and transmission).  
+This model now accounts for about 84% of the MPG variance (Adjusted R-squared 0.8401) which is better than our model that accounts for all the variables. The final model included four variables (number of cylinders, horsepower, weight, and transmission). We see that the   
 
 ```{r}
 anova(model_am, model_full, model_best)
