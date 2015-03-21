@@ -51,14 +51,14 @@ Fitting all the variables can explain about 81% (Adjusted R-Squared 0.8066) of t
 Using R step function to step through the iterations of variables to determine which model would be the best. 
 
 ```{r}
-model_best <- step(model_full, direction="both", trace=0)
+model_best <- step(model_full, trace=0)
 summary(model_best)
 ```
 
 This model now accounts for about 83% of the variance which is better than our model that accounts for all the variables. The final model included three variables (weight, 1/4 mile time, and transmission). 
 
 ```{r}
-
+anova(model_am, model_full, model_best)
 ```
 
 ##Residuals
