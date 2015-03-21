@@ -57,9 +57,13 @@ summary(model_best)
 
 This model now accounts for about 83% of the variance which is better than our model that accounts for all the variables. The final model included three variables (weight, 1/4 mile time, and transmission). 
 
+```{r}
+
+```
+
 ##Residuals
 
-
+According to the Normal Q-Q plot (*see* **Figure 3**) we see that the residuals appear to be normally distributed as the data points fit quite closely to the line.
 
 
 #Appendix
@@ -87,6 +91,8 @@ pairs(mtcars, main="Matrix Scatterplot of all Variables", panel=function(x,y){
 ```
 
 ##Figure 3: Residual Plots
+
+Residuals plots for the best fit model.
 
 ```{r}
 par(mfrow=c(2,2))
