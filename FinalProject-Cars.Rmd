@@ -30,7 +30,7 @@ First we try a linear model using mpg as the outcome and transmission type (vari
 
 ###Model: Transmission Type Only
 
-```{r}
+```{r results='hide'}
 model_am <- lm(mpg ~ am)
 summary(model_am)$adj.r.squared
 ```
@@ -55,7 +55,7 @@ model_best <- step(model_full, direction="both", trace=0)
 summary(model_best)
 ```
 
-This model now accounts for about 83% of the variance which is better than our model that accounts for all the variables. The final model included 
+This model now accounts for about 83% of the variance which is better than our model that accounts for all the variables. The final model included three variables (weight, 1/4 mile time, and transmission). 
 
 ##Residuals
 
