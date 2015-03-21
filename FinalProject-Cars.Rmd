@@ -13,7 +13,7 @@ Fuel efficienty and transmission type are both very important and greatly debate
 
 ##Exploring the Data
 
-First the mtcars data is loaded and some brief exploratory statistics are discovered.
+First the mtcars data is loaded, variables set as factors, and some brief exploratory statistics are discovered.
 
 ```{r}
 data(mtcars); attach(mtcars)
@@ -59,6 +59,7 @@ This model now accounts for about 83% of the variance which is better than our m
 
 ```{r}
 anova(model_am, model_full, model_best)
+summary(model_best)$coef
 ```
 
 ##Residuals
