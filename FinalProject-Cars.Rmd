@@ -7,7 +7,7 @@ output: pdf_document
 
 ##Executive Summary
 
-Fuel efficienty and transmission type are both very important and greatly debated factors when selecting a new car. This report examines the relationship between tranmission type and fuel economy to determine if there is any MPG benefit to purchasing a car of either type transmission. The data used in this report is from the 1974 Motor Trend US magazine.
+Fuel efficiency and transmission type are both very important and greatly debated factors when selecting a new car. This report examines the relationship between transmission type and fuel economy to determine if there is any MPG benefit to purchasing a car of either type transmission. The data used in this report is from the 1974 Motor Trend US magazine.
 
 <results summary>
 
@@ -51,7 +51,7 @@ model_full <- lm(mpg ~ ., mtcars)
 summary(model_full)$adj.r.squared #result not shown to save space
 ```
 
-Fitting all the variables can explain about 78% (Adjusted R-squared 0.7790) of the variance in MPG. Accoding to the matrix scatterplot of all the variables in mtcars (*see* **Figure 2**) the there are a number of other variables that show significant correlation with MPG. Therefore we can probably create a better model using only the most significant variables. 
+Fitting all the variables can explain about 78% (Adjusted R-squared 0.7790) of the variance in MPG. According to the matrix scatterplot of all the variables in mtcars (*see* **Figure 2**) the there are a number of other variables that show significant correlation with MPG. Therefore we can probably create a better model using only the most significant variables. 
 
 ###Model: Best Fit
 
@@ -62,17 +62,21 @@ model_best <- step(model_full, trace=0)
 summary(model_best) #result not shown to save space
 ```
 
-This model now accounts for about 84% of the MPG variance (Adjusted R-squared 0.8401) which is better than our model that accounts for all the variables. The final model included four variables (number of cylinders, horsepower, weight, and transmission). We see that the   
+This model now accounts for about 84% of the MPG variance (Adjusted R-squared 0.8401) which is better than our model that accounts for all the variables. The final model included four variables (number of cylinders, horsepower, weight, and transmission).  
 
 ```{r}
-anova(model_am, model_full, model_best)
 summary(model_best)$coef
 ```
 
+Thus, we can determine that a manual transmission shows about 1.8 MPG better fuel economy than an automatic transmission.
+
 ##Residuals
 
-According to the Normal Q-Q plot (*see* **Figure 3**) we see that the residuals appear to be normally distributed as the data points fit quite closely to the line.
+Residuals plots are shown in the Appendix (*see* **Figure 3**).
 
+1. According to the Normal Q-Q plot we see that the residuals appear to be normally distributed as the data points fit quite closely to the line.
+2. 2We can conclude that our model fits as the residuals vs fitted plot does not show a disernable pattern.
+3. We also notice that there are no outliers by looking at the residuals vs leverage plot.
 
 #Appendix
 
@@ -104,5 +108,5 @@ Residuals plots for the best fit model.
 
 ```{r}
 par(mfrow=c(2,2))
-plot(model_best)
+plot(model_best, pch=16, lwd=2)
 ```
