@@ -1,7 +1,7 @@
 ---
 title: "Regression Models - Transmission and MPG"
 author: "Ryan Wissman"
-date: "Friday, March 20, 2015"
+date: "Saturday, March 21, 2015"
 output: pdf_document
 ---
 
@@ -9,7 +9,11 @@ output: pdf_document
 
 Fuel efficiency and transmission type are both very important and greatly debated factors when selecting a new car. This report examines the relationship between transmission type and fuel economy to determine if there is any MPG benefit to purchasing a car of either type transmission. The data used in this report is from the 1974 Motor Trend US magazine.
 
-<results summary>
+###Key Findings:
+
+* According to the following analysis a manual transmission does show slightly better fuel economy than an automatic transmission. 
+* The difference in fuel economy is 1.8 MPG, favoring manual transmission.
+* Additional considerations for fuel economy are: number of cylinders, car weight, and horsepower. 
 
 ##Exploring the Data
 
@@ -19,11 +23,8 @@ First the mtcars data is loaded, variables set as factors (cylinders, v/s (v or 
 data(mtcars); attach(mtcars)
 
 #set relevant variables to factors
-mtcars$cyl <- factor(mtcars$cyl)
-mtcars$vs <- factor(mtcars$vs)
-mtcars$am <- factor(mtcars$am)
-mtcars$gear <- factor(mtcars$gear)
-mtcars$carb <- factor(mtcars$carb)
+mtcars$cyl <- factor(mtcars$cyl); mtcars$vs <- factor(mtcars$vs); mtcars$am <- factor(mtcars$am)
+mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 
 mean(mpg[am=="0"]) #Automatic Transmission mean
 mean(mpg[am=="1"]) #Manual Transmission mean
@@ -35,7 +36,7 @@ Quickly examining the data to determine the means we find that the average fuel 
 
 First we try a linear model using mpg as the outcome and transmission type (variable am, "0" denotes automatic whereas "1" denotes manual) as the predictor.
 
-###Model: Transmission Type Only
+###Regression Model: Transmission Type Only
 
 ```{r results='hide'}
 model_am <- lm(mpg ~ am)
@@ -44,7 +45,7 @@ summary(model_am)$adj.r.squared #result not shown to save space
 
 Using this model we can determine that this model can only explain about 34% (Adjusted R-squared value of 0.3384) of the variance in MPG. Transmission alone does not look like it accounts for enough of the variation to be significant by itself. Therefore we should try another model to examine the other variables in the mtcars dataset.
 
-###Model: All Variables 
+###Regression Model: All Variables 
 
 ```{r results='hide'}
 model_full <- lm(mpg ~ ., mtcars)
@@ -53,13 +54,13 @@ summary(model_full)$adj.r.squared #result not shown to save space
 
 Fitting all the variables can explain about 78% (Adjusted R-squared 0.7790) of the variance in MPG. According to the matrix scatterplot of all the variables in mtcars (*see* **Figure 2**) the there are a number of other variables that show significant correlation with MPG. Therefore we can probably create a better model using only the most significant variables. 
 
-###Model: Best Fit
+###Regression Model: Best Fit
 
 Using R step function to step through the iterations of variables to determine which model would be the best. 
 
 ```{r results='hide'}
 model_best <- step(model_full, trace=0)
-summary(model_best) #result not shown to save space
+summary(model_best) 
 ```
 
 This model now accounts for about 84% of the MPG variance (Adjusted R-squared 0.8401) which is better than our model that accounts for all the variables. The final model included four variables (number of cylinders, horsepower, weight, and transmission).  
@@ -75,7 +76,7 @@ Thus, we can determine that a manual transmission shows about 1.8 MPG better fue
 Residuals plots are shown in the Appendix (*see* **Figure 3**).
 
 1. According to the Normal Q-Q plot we see that the residuals appear to be normally distributed as the data points fit quite closely to the line.
-2. 2We can conclude that our model fits as the residuals vs fitted plot does not show a disernable pattern.
+2. We can conclude that our model fits as the residuals vs fitted plot does not show a discernible pattern.
 3. We also notice that there are no outliers by looking at the residuals vs leverage plot.
 
 #Appendix
